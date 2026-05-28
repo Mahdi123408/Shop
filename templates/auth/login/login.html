@@ -1,0 +1,96 @@
+{% extends 'base/base_heder_footer.html' %}
+{% block title %}
+صفحه ورورد
+{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>صفحه ورود مدرن</title>
+  <link rel="stylesheet" href="/templates/auth/login/style.css" />
+</head>
+<body>
+  <div class="background">
+    <span class="blob blob1"></span>
+    <span class="blob blob2"></span>
+    <span class="blob blob3"></span>
+    <span class="shape shape1"></span>
+    <span class="shape shape2"></span>
+  </div>
+
+  <main class="page">
+    <section class="info-panel">
+      <div class="badge">پنل ورود امن و مدرن</div>
+      <h1>
+        ورود به حساب کاربری
+        <span>با تجربه‌ای حرفه‌ای</span>
+      </h1>
+      <p>
+        یک فرم لاگین زیبا، سریع و کاملاً ریسپانسیو با طراحی مدرن و افکت‌های نرم
+        برای موبایل و دسکتاپ.
+      </p>
+
+      <div class="features">
+        <div class="feature-box">
+          <strong>100%</strong>
+          <span>ریسپانسیو</span>
+        </div>
+        <div class="feature-box">
+          <strong>UI</strong>
+          <span>مدرن</span>
+        </div>
+        <div class="feature-box">
+          <strong>UX</strong>
+          <span>روان</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="login-wrapper">
+      <div class="login-card">
+        <div class="shine"></div>
+
+        <div class="icon-box">
+          🔐
+        </div>
+
+        <h2>خوش اومدی</h2>
+        <p class="subtitle">برای ادامه وارد حساب کاربری خودت شو</p>
+
+        <form class="login-form" method="POST">
+            {% csrf_token %}
+          <div class="input-group">
+            <input type="text" id="username" name="username" placeholder=" " required />
+            <label for="username">نام کاربری</label>
+          </div>
+
+          <div class="input-group">
+            <input type="password" id="password" name="password" placeholder=" " required />
+            <label for="password">رمز عبور</label>
+          </div>
+
+          <div class="options">
+            <a href="#">فراموشی رمز عبور</a>
+          </div>
+
+          <button type="submit" class="login-btn">ورود به حساب</button>
+
+          
+
+          
+        </form>
+
+        <p class="register-text">
+          حساب کاربری نداری؟
+          <a href="/auth/register/">ثبت‌نام</a>
+        </p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+
+{% endblock %}

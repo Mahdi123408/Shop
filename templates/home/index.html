@@ -1,0 +1,362 @@
+{% extends 'base/base_heder_footer.html' %}
+{% load humanize %}
+{% block title %}
+فروشگاه
+{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="/templates/home/style.css?v=layout-fix" />
+{% endblock %}
+
+{% block content %}
+
+  <div class="bg-orbs">
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+    <span class="orb orb-4"></span>
+    <span class="grid-lines"></span>
+  </div>
+
+  
+
+  
+
+  <div class="home-page">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="hero-chip">تخفیف‌های ویژه امروز</span>
+          <h1>تجربه‌ای متفاوت از <span>خرید آنلاین</span> با طراحی مدرن</h1>
+          <p>
+            جدیدترین محصولات دیجیتال، لوازم خانه و اکسسوری‌های خاص را با بهترین قیمت،
+            ارسال سریع و پشتیبانی حرفه‌ای تهیه کنید.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#" class="btn btn-primary">مشاهده محصولات</a>
+            <a href="#" class="btn btn-secondary">بیشتر بدانید</a>
+          </div>
+
+          <div class="hero-stats">
+            <div>
+              <strong>+12K</strong>
+              <span>محصول متنوع</span>
+            </div>
+            <div>
+              <strong>+8K</strong>
+              <span>مشتری راضی</span>
+            </div>
+            <div>
+              <strong>24/7</strong>
+              <span>پشتیبانی</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-card-top">
+            <span class="discount">تا 40٪ تخفیف</span>
+            <span class="mini-badge"><i class="fa-solid fa-bolt"></i> پرفروش</span>
+          </div>
+          <img src="{% with media=product_home.media.all|first %}
+                           {% if media and media.image %}
+                                                {{ media.image.url }}
+                                            {% else %}
+/templates/i1.jpg
+{% endif %}
+{% endwith %}" alt="محصول ویژه" />
+          <div class="hero-card-bottom">
+            <h3>
+                {% if product_home %}
+                    {{ product_home.title }}
+                {% else %}
+                    گوشی هوشمند نسل جدید
+                {% endif %}
+            </h3>
+            <p>
+                {% if product_home %}
+                    {{ product_home.description }}
+                {% else %}
+                    نمایشگر خیره‌کننده، باتری قدرتمند، طراحی لوکس
+                {% endif %}
+            </p>
+            <div class="price-row">
+              <strong>{% if product_home %}
+                    {{ product_home.final_price|intcomma }}
+                {% else %}
+                    ۱۸,۹۰۰,۰۰۰
+                {% endif %} تومان</strong>
+              {% if product_home and product_home.count_inventory > 0 %}
+                <form method="post" action="/product/cart/add/{{ product_home.id }}/" class="inline-cart-form">
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="{{ request.path }}">
+                  <button type="submit">افزودن به سبد</button>
+                </form>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>دسته‌بندی‌های محبوب</h2>
+          <a href="#">مشاهده همه</a>
+        </div>
+
+        <div class="category-grid">
+          <a href="#" class="category-item">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+            <span>موبایل</span>
+          </a>
+          <a href="#" class="category-item">
+            <i class="fa-solid fa-laptop"></i>
+            <span>لپ‌تاپ</span>
+          </a>
+          <a href="#" class="category-item">
+            <i class="fa-solid fa-headphones-simple"></i>
+            <span>هدفون</span>
+          </a>
+          <a href="#" class="category-item">
+            <i class="fa-solid fa-camera"></i>
+            <span>دوربین</span>
+          </a>
+          <a href="#" class="category-item">
+            <i class="fa-solid fa-house"></i>
+            <span>خانه و آشپزخانه</span>
+          </a>
+          <a href="#" class="category-item">
+            <i class="fa-solid fa-gamepad"></i>
+            <span>گیمینگ</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section">
+      <div class="container">
+        <div class="feature-grid">
+          <div class="feature-card">
+            <i class="fa-solid fa-truck-fast"></i>
+            <h3>ارسال سریع</h3>
+            <p>تحویل مطمئن و سریع در سراسر کشور</p>
+          </div>
+          <div class="feature-card">
+            <i class="fa-solid fa-shield-halved"></i>
+            <h3>خرید امن</h3>
+            <p>پرداخت مطمئن با حفاظت کامل اطلاعات</p>
+          </div>
+          <div class="feature-card">
+            <i class="fa-solid fa-headset"></i>
+            <h3>پشتیبانی حرفه‌ای</h3>
+            <p>پشتیبانی پاسخ‌گو در تمام روزهای هفته</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products -->
+    {% if products %}
+
+                <section class="bm-category-block">
+
+                    <div class="bm-category-head">
+
+                        <div>
+                            <h2>محصولات</h2>
+                            
+                        </div>
+
+                        <a href="/product/products/" class="bm-view-all-link">
+                            مشاهده همه
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
+
+                    </div>
+
+                    
+
+                    <div class="bm-slider-shell">
+
+                        <button class="bm-slider-btn prev" type="button" aria-label="قبلی">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                        <div class="bm-products-track">
+
+                            {% for product in products %}
+
+                                <article class="bm-product-card">
+
+                                    <div class="bm-product-media">
+
+                                        {% with media=product.media.all|first %}
+                                            {% if media and media.image %}
+                                                <img src="{{ media.image.url }}" alt="{{ product.title }}">
+                                            {% else %}
+                                                <div class="bm-no-image">
+                                                    <i class="fa-regular fa-image"></i>
+                                                </div>
+                                            {% endif %}
+                                        {% endwith %}
+
+                                        {% if product.discount > 0 %}
+                                            <span class="bm-discount-badge">
+                                                تخفیف {{ product.discount|intcomma }}
+                                            </span>
+                                        {% endif %}
+
+                                    </div>
+
+                                    <div class="bm-product-body">
+
+                                        <h3>{{ product.title }}</h3>
+
+                                        <p>{{ product.description|truncatechars:90 }}</p>
+
+                                        <div class="bm-stock-line">
+                                            {% if product.count_inventory > 0 %}
+                                                <span class="in-stock">
+                                                    <i class="fa-solid fa-box-open"></i>
+                                                    {{ product.count_inventory }} عدد موجود
+                                                </span>
+                                            {% else %}
+                                                <span class="out-stock">
+                                                    <i class="fa-solid fa-circle-xmark"></i>
+                                                    ناموجود
+                                                </span>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="bm-price-row">
+                                            {% if product.discount > 0 %}
+                                                <div class="bm-price-box">
+                                                    <del>{{ product.price|intcomma }}</del>
+                                                    <strong>{{ product.final_price|intcomma }} تومان</strong>
+                                                </div>
+                                            {% else %}
+                                                <strong class="bm-main-price">{{ product.price|intcomma }} تومان</strong>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="bm-card-actions">
+                                            <a href="#" class="bm-action-btn view">
+                                                <i class="fa-solid fa-eye"></i>
+                                                مشاهده
+                                            </a>
+
+                                            {% if product.count_inventory > 0 %}
+                                                <form method="post" action="/product/cart/add/{{ product.id }}/" class="bm-cart-form">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                                    <button type="submit" class="bm-action-btn cart">
+                                                    <i class="fa-solid fa-cart-plus"></i>
+                                                    افزودن
+                                                    </button>
+                                                </form>
+                                            {% else %}
+                                                <span class="bm-action-btn cart disabled">
+                                                    ناموجود
+                                                </span>
+                                            {% endif %}
+                                        </div>
+
+                                    </div>
+
+                                </article>
+
+                            {% endfor %}
+
+                        </div>
+
+                        <button class="bm-slider-btn next" type="button" aria-label="بعدی">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                    </div>
+
+                </section>
+
+            {% endif %}
+
+    <!-- Banner -->
+    <section class="section">
+      <div class="container">
+        <div class="promo-banner">
+          <div>
+            <span>حراج بزرگ آخر هفته</span>
+            <h2>تا 50٪ تخفیف روی محصولات منتخب</h2>
+            <p>فرصت محدود برای خرید بهترین محصولات با کمترین قیمت</p>
+          </div>
+          <a href="#" class="btn btn-primary">مشاهده تخفیف‌ها</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>نظرات مشتریان</h2>
+          <a href="#">همه نظرات</a>
+        </div>
+
+        <div class="review-grid">
+          <div class="review-card">
+            <p>«طراحی سایت خیلی شیکه و تجربه خرید واقعاً لذت‌بخشه. سرعت ارسال هم عالی بود.»</p>
+            <strong>سارا رضایی</strong>
+            <span>مشتری وفادار</span>
+          </div>
+          <div class="review-card">
+            <p>«محصولات با کیفیت و پشتیبانی سریع باعث شد دوباره از این فروشگاه خرید کنم.»</p>
+            <strong>علی محمدی</strong>
+            <span>خریدار</span>
+          </div>
+          <div class="review-card">
+            <p>«همه‌چیز مرتب، مدرن و حرفه‌ایه. منوی موبایل هم خیلی کاربردی طراحی شده.»</p>
+            <strong>نگین حسینی</strong>
+            <span>کاربر جدید</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.querySelectorAll('.bm-slider-shell').forEach((shell) => {
+    const track = shell.querySelector('.bm-products-track');
+    const prevBtn = shell.querySelector('.bm-slider-btn.prev');
+    const nextBtn = shell.querySelector('.bm-slider-btn.next');
+
+    if (!track || !prevBtn || !nextBtn) return;
+
+    const scrollAmount = () => Math.max(320, Math.floor(track.clientWidth * 0.85));
+
+    prevBtn.addEventListener('click', () => {
+        track.scrollBy({
+            left: scrollAmount(),
+            behavior: 'smooth'
+        });
+    });
+
+    nextBtn.addEventListener('click', () => {
+        track.scrollBy({
+            left: -scrollAmount(),
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+{% endblock %}

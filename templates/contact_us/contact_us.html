@@ -1,0 +1,191 @@
+{% extends 'base/base_heder_footer.html' %}
+
+{% block title %}
+تماس با ما
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="/templates/contact_us/style.css">
+{% endblock %}
+{% block content %}
+
+<section class="bm-contact-hero">
+
+    <div class="bm-contact-glow bm-contact-glow-1"></div>
+    <div class="bm-contact-glow bm-contact-glow-2"></div>
+
+    <div class="bm-container">
+
+        <div class="bm-contact-top">
+
+            <span class="bm-contact-badge">
+
+                <i class="fa-solid fa-headset"></i>
+
+                ارتباط با ما
+
+            </span>
+
+            <h1>
+                همیشه یک راه برای
+                <span>ارتباط وجود دارد</span>
+            </h1>
+
+            <p>
+                اگر سوال، پیشنهاد، مشکل یا حتی انتقاد داری،
+                تیم ما آماده پاسخ‌گویی است.
+                برخلاف بعضی سایت‌ها که بخش تماس با ما را گذاشته‌اند فقط برای تزئین.
+            </p>
+
+        </div>
+
+        <div class="bm-contact-wrapper">
+
+            <!-- CONTACT INFO -->
+
+            <div class="bm-contact-info">
+
+                <div class="bm-contact-info-card">
+
+                    <div class="bm-contact-icon">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+
+                    <div>
+
+                        <h3>شماره تماس</h3>
+
+                        <span>021-12345678</span>
+
+                    </div>
+
+                </div>
+
+                <div class="bm-contact-info-card">
+
+                    <div class="bm-contact-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+
+                    <div>
+
+                        <h3>ایمیل</h3>
+
+                        <span>info@bluemart.com</span>
+
+                    </div>
+
+                </div>
+
+                <div class="bm-contact-info-card">
+
+                    <div class="bm-contact-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+
+                    <div>
+
+                        <h3>آدرس</h3>
+
+                        <span>تهران، خیابان آزادی</span>
+
+                    </div>
+
+                </div>
+
+                <div class="bm-contact-socials">
+
+                    <a href="#">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- FORM -->
+
+            <div class="bm-contact-form-card">
+
+                <div class="bm-contact-form-top">
+
+                    <h2>ارسال پیام</h2>
+
+                    <p>
+                        پیام خودت را برای ما ارسال کن.
+                    </p>
+
+                </div>
+
+                <form class="bm-contact-form">
+
+                    <div class="bm-contact-input-grid">
+
+                        <div class="bm-contact-input-group">
+
+                            <label>
+                                نام
+                            </label>
+
+                            <input type="text" placeholder="نام شما">
+
+                        </div>
+
+                        <div class="bm-contact-input-group">
+
+                            <label>
+                                ایمیل
+                            </label>
+
+                            <input type="email" placeholder="example@gmail.com">
+
+                        </div>
+
+                    </div>
+
+                    <div class="bm-contact-input-group">
+
+                        <label>
+                            موضوع
+                        </label>
+
+                        <input type="text" placeholder="موضوع پیام">
+
+                    </div>
+
+                    <div class="bm-contact-input-group">
+
+                        <label>
+                            پیام
+                        </label>
+
+                        <textarea placeholder="پیام خود را بنویسید..."></textarea>
+
+                    </div>
+
+                    <button type="submit" class="bm-contact-submit">
+
+                        <i class="fa-solid fa-paper-plane"></i>
+
+                        ارسال پیام
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

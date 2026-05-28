@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+
+    <link rel="stylesheet" href="/templates/base/style.css?v=header-fix">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body class="bm-body">
+
+<div class="bm-bg-orbs">
+    <span class="bm-orb bm-orb-1"></span>
+    <span class="bm-orb bm-orb-2"></span>
+    <span class="bm-orb bm-orb-3"></span>
+    <span class="bm-orb bm-orb-4"></span>
+</div>
+
+<!-- HEADER -->
+<header class="bm-header">
+
+    <div class="bm-container bm-header-inner">
+
+        <a href="/" class="bm-logo">
+
+                <span class="bm-logo-badge">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </span>
+
+            <div class="bm-logo-text">
+                <strong>BlueMart</strong>
+                <span>فروشگاه مدرن</span>
+            </div>
+
+        </a>
+
+        <nav class="bm-nav">
+
+            <a href="/">صفحه اصلی</a>
+            <a href="/product/categories/">دسته‌بندی‌ها</a>
+            <a href="/product/products/">محصولات</a>
+            <a href="#">تخفیف‌ها</a>
+            <a href="/about/">درباره ما</a>
+            <a href="/contact_us/">تماس با ما</a>
+
+        </nav>
+
+        <div class="bm-header-actions">
+
+            <div class="bm-search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input type="text" placeholder="جستجو در فروشگاه...">
+
+            </div>
+
+            <a href="#" class="bm-icon-btn">
+                <i class="fa-regular fa-heart"></i>
+            </a>
+
+            <a href="/product/cart/" class="bm-icon-btn bm-cart">
+
+                <i class="fa-solid fa-cart-shopping"></i>
+
+                <span>{{ cart_count|default:0 }}</span>
+
+            </a>
+
+            {% if custom_user %}
+
+                <div class="bm-user-dropdown">
+
+                    <button class="bm-user-btn">
+
+                        <i class="fa-regular fa-user"></i>
+
+                        <span>{{ custom_user.first_name }}</span>
+
+                        <i class="fa-solid fa-chevron-down bm-user-arrow"></i>
+
+                    </button>
+
+                    <div class="bm-user-menu">
+
+                        <a href="#">
+                            <i class="fa-regular fa-user"></i>
+                            پروفایل
+                        </a>
+
+                        <a href="#">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                            سفارش‌ها
+                        </a>
+
+                        <a href="/auth/logout/" class="bm-logout-btn">
+
+                            <i class="fa-solid fa-right-from-bracket"></i>
+
+                            خروج
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% else %}
+
+                <a href="/auth/login/" class="bm-icon-btn bm-user-login">
+
+                    <i class="fa-solid fa-right-to-bracket"></i>
+
+                </a>
+
+            {% endif %}
+
+            <button class="bm-menu-btn" id="bmMenuBtn">
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+<!-- MOBILE MENU -->
+
+<div class="bm-mobile-overlay" id="bmMobileOverlay"></div>
+
+<aside class="bm-mobile-menu" id="bmMobileMenu">
+
+    <div class="bm-mobile-menu-header">
+
+        <div>
+            <strong>منو</strong>
+            <p>دسترسی سریع</p>
+        </div>
+
+        <button class="bm-close-btn" id="bmCloseBtn">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+    </div>
+
+    <div class="bm-mobile-search">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input type="text" placeholder="جستجو...">
+
+    </div>
+
+    <nav class="bm-mobile-nav">
+
+        <a href="#"><i class="fa-solid fa-house"></i> صفحه اصلی</a>
+
+        <a href="#"><i class="fa-solid fa-layer-group"></i> دسته‌بندی‌ها</a>
+
+        <a href="#"><i class="fa-solid fa-box"></i> محصولات</a>
+
+        <a href="#"><i class="fa-solid fa-tag"></i> تخفیف‌ها</a>
+
+        <a href="/product/cart/"><i class="fa-solid fa-cart-shopping"></i> سبد خرید</a>
+
+    </nav>
+
+</aside>
+
+<!-- CONTENT -->
+
+<main class="bm-main">
+
+    {% block content %}{% endblock %}
+
+</main>
+
+<!-- FOOTER -->
+
+<footer class="bm-footer">
+
+    <div class="bm-container bm-footer-grid">
+
+        <div>
+
+            <h3>BlueMart</h3>
+
+            <p>
+                فروشگاه مدرن برای تجربه خرید سریع و امن
+            </p>
+
+        </div>
+
+        <div>
+
+            <h4>لینک‌ها</h4>
+
+            <a href="#">محصولات</a>
+            <a href="#">تخفیف‌ها</a>
+            <a href="#">تماس</a>
+
+        </div>
+
+        <div>
+
+            <h4>ارتباط</h4>
+
+            <p>تهران</p>
+
+            <p>02112345678</p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+<script>
+    
+    const bmMenuBtn = document.getElementById('bmMenuBtn');
+
+    const bmCloseBtn = document.getElementById('bmCloseBtn');
+
+    const bmMobileMenu = document.getElementById('bmMobileMenu');
+
+    const bmMobileOverlay = document.getElementById('bmMobileOverlay');
+
+    function openMenu() {
+
+        bmMobileMenu.classList.add('open');
+
+        bmMobileOverlay.classList.add('show');
+
+        document.body.classList.add('bm-no-scroll');
+
+    }
+
+    function closeMenu() {
+
+        bmMobileMenu.classList.remove('open');
+
+        bmMobileOverlay.classList.remove('show');
+
+        document.body.classList.remove('bm-no-scroll');
+
+    }
+
+    bmMenuBtn.addEventListener('click', openMenu);
+
+    bmCloseBtn.addEventListener('click', closeMenu);
+
+    bmMobileOverlay.addEventListener('click', closeMenu);
+    {% if mes %}
+    
+        alert("{{ mes }}")
+    
+{% endif %}
+
+</script>
+
+{% block extra_js %}{% endblock %}
+
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+{% extends 'base/base_heder_footer.html' %}
+
+{% block title %}
+دسته‌بندی کالاها
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="/templates/category/style.css">
+{% endblock %}
+{% block content %}
+
+<section class="bm-category-v3">
+
+    <div class="bm-category-v3-glow bm-category-v3-glow-1"></div>
+    <div class="bm-category-v3-glow bm-category-v3-glow-2"></div>
+
+    <div class="bm-container">
+
+        <!-- HERO -->
+
+        <div class="bm-category-v3-hero">
+
+            <span class="bm-category-v3-badge">
+
+                <i class="fa-solid fa-layer-group"></i>
+
+                دسته‌بندی کالاها
+
+            </span>
+
+            <h1>
+
+                همه چیز
+                <span>مرتب و ساده</span>
+
+            </h1>
+
+            <p>
+                دسته‌بندی‌ها طوری طراحی شده‌اند که سریع‌تر به محصول موردنظر برسی.
+                بدون منوهای عجیب، دکمه‌های فضایی و طراحی‌هایی که انگار برای شکنجه کاربر ساخته شده‌اند.
+            </p>
+
+        </div>
+
+        <!-- GRID -->
+
+        <div class="bm-category-v3-grid">
+
+            {% for category in categories %}
+
+                <a href="/product/categories/{{ category.slug }}/" class="bm-category-v3-card">
+
+                    <div class="bm-category-v3-top">
+
+                        <div class="bm-category-v3-icon">
+
+                            <i class="fa-solid fa-cube"></i>
+
+                        </div>
+
+                        <span>
+
+                            {{ category.sub_categorys.count }} زیرشاخه
+
+                        </span>
+
+                    </div>
+
+                    <h2>
+
+                        {{ category.name }}
+
+                    </h2>
+
+                    <p>
+
+                        {{ category.description|truncatechars:120 }}
+
+                    </p>
+
+                    {% if category.sub_categorys.all %}
+
+                        <div class="bm-category-v3-subcategories">
+
+                            {% for sub in category.sub_categorys.all|slice:":4" %}
+
+                                <span>
+
+                                    {{ sub.name }}
+
+                                </span>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endif %}
+
+                </a>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,142 @@
+{% extends 'base/base_heder_footer.html' %}
+{% block title %}
+    صفحه ثبت نام
+{% endblock %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="fa" dir="rtl">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>صفحه ثبت نام مدرن</title>
+
+        <link rel="stylesheet" href="/templates/auth/register/style.css"/>
+    </head>
+
+    <body>
+
+    <div class="background">
+        <span class="blob blob1"></span>
+        <span class="blob blob2"></span>
+        <span class="blob blob3"></span>
+
+        <span class="shape shape1"></span>
+        <span class="shape shape2"></span>
+    </div>
+
+    <main class="page">
+
+        <!-- Right Side -->
+        <section class="info-panel">
+
+            <div class="badge">
+                ثبت نام سریع و امن
+            </div>
+
+            <h1>
+                ساخت حساب کاربری
+                <span>در چند ثانیه</span>
+            </h1>
+
+            <p>
+                با ایجاد حساب کاربری به امکانات کامل فروشگاه،
+                پیگیری سفارش‌ها، علاقه‌مندی‌ها و خرید سریع‌تر دسترسی داشته باش.
+            </p>
+
+            <div class="features">
+
+                <div class="feature-box">
+                    <strong>امن</strong>
+                    <span>حفاظت اطلاعات</span>
+                </div>
+
+                <div class="feature-box">
+                    <strong>سریع</strong>
+                    <span>ثبت‌نام فوری</span>
+                </div>
+
+                <div class="feature-box">
+                    <strong>مدرن</strong>
+                    <span>طراحی حرفه‌ای</span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Register Form -->
+        <section class="login-wrapper">
+
+            <div class="login-card">
+
+                <div class="shine"></div>
+
+                <div class="icon-box">
+                    ✨
+                </div>
+
+                <h2>ایجاد حساب</h2>
+
+                <p class="subtitle">
+                    اطلاعات خودت رو وارد کن تا حساب ساخته بشه
+                </p>
+
+                <form class="login-form" method="POST">
+
+                    {% csrf_token %}
+
+                    <div class="input-group">
+                        <input type="text" id="first_name" name="first_name" placeholder=" " required/>
+                        <label for="first_name">نام</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" id="last_name" name="last_name" placeholder=" " required/>
+                        <label for="last_name">نام خانوادگی</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="text" id="username" name="username" placeholder=" " required/>
+                        <label for="username">نام کاربری</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="phone_number" name="phone_number" placeholder=" " required/>
+                        <label for="phone_number">شماره تلفن</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="email" name="email" placeholder=" " required/>
+                        <label for="email">ایمیل</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="password" id="password" name="password" placeholder=" " required/>
+                        <label for="password">رمز عبور</label>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="password" id="confirm_password" name="confirm_password" placeholder=" " required/>
+                        <label for="confirm_password">تکرار رمز عبور</label>
+                    </div>
+
+                    <button type="submit" class="login-btn">
+                        ساخت حساب کاربری
+                    </button>
+
+                </form>
+
+                <p class="register-text">
+                    قبلاً حساب ساختی؟
+                    <a href="/auth/login/">ورود به حساب</a>
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    </body>
+    </html>
+
+{% endblock %}

@@ -1,0 +1,187 @@
+
+{% extends 'base/base_heder_footer.html' %}
+{% load humanize %}
+{% block title %}
+{{ category.name }}
+{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="/templates/category/style2.css">
+{% endblock %}
+{% block content %}
+
+<section class="bm-one-category">
+
+    <div class="bm-container">
+
+        <div class="bm-one-category-hero">
+
+            <span>
+
+                دسته‌بندی محصولات
+
+            </span>
+
+            <h1>
+
+                {{ category.name }}
+
+            </h1>
+
+            <p>
+
+                {{ category.description }}
+
+            </p>
+
+        </div>
+
+        <div class="bm-one-category-grid">
+
+            {% for product in products %}
+
+                <div class="bm-one-category-card">
+
+    <div class="bm-one-category-image">
+
+        {% with media=product.media.first %}
+            {% if media and media.image %}
+                <img src="{{ media.image.url }}" alt="{{ product.title }}">
+            {% else %}
+                <div class="bm-no-image">
+                    <i class="fa-solid fa-image"></i>
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% if product.discount > 0 %}
+            <span class="bm-product-badge">
+                {{ product.discount|intcomma }} تومان تخفیف
+            </span>
+        {% endif %}
+    </div>
+
+    <div class="bm-one-category-content">
+
+        <h3>{{ product.title }}</h3>
+
+        <p>{{ product.description|truncatechars:90 }}</p>
+
+        <div class="bm-product-stock">
+            {% if product.count_inventory > 0 %}
+                <span class="in-stock">
+                    <i class="fa-solid fa-box-open"></i>
+                    {{ product.count_inventory }} عدد موجود
+                </span>
+            {% else %}
+                <span class="out-stock">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    ناموجود
+                </span>
+            {% endif %}
+        </div>
+
+        <div class="bm-one-category-bottom">
+            {% if product.discount > 0 %}
+                <div class="bm-price-box">
+                    <del>{{ product.price|intcomma }}</del>
+                    <strong>{{ product.final_price|intcomma }} تومان</strong>
+                </div>
+            {% else %}
+                <strong class="bm-main-price">
+                    {{ product.price|intcomma }} تومان
+                </strong>
+            {% endif %}
+        </div>
+
+        <div class="bm-product-actions">
+            <a href="#" class="bm-view-btn">
+                <i class="fa-solid fa-eye"></i>
+                مشاهده
+            </a>
+
+            {% if product.count_inventory > 0 %}
+                <form method="post" action="/product/cart/add/{{ product.id }}/" class="bm-cart-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button type="submit" class="bm-cart-btn">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    افزودن
+                    </button>
+                </form>
+            {% else %}
+                <span class="bm-cart-btn disabled">
+                    ناموجود
+                </span>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+            {% empty %}
+
+                <div class="bm-one-category-empty">
+
+                    محصولی در این دسته‌بندی وجود ندارد
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% if page_obj.has_other_pages %}
+
+            <div class="bm-pagination">
+
+                {% if page_obj.has_previous %}
+
+                    <a href="?page={{ page_obj.previous_page_number }}">
+
+                        قبلی
+
+                    </a>
+
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+
+                    {% if page_obj.number == num %}
+
+                        <span class="active">
+
+                            {{ num }}
+
+                        </span>
+
+                    {% else %}
+
+                        <a href="?page={{ num }}">
+
+                            {{ num }}
+
+                        </a>
+
+                    {% endif %}
+
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+
+                    <a href="?page={{ page_obj.next_page_number }}">
+
+                        بعدی
+
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

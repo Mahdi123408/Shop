@@ -1,0 +1,194 @@
+{% extends 'base/base_heder_footer.html' %}
+{% load humanize %}
+
+{% block title %}
+محصولات
+{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="/templates/products/style.css">
+{% endblock %}
+
+{% block content %}
+
+<section class="bm-products-page">
+
+    <div class="bm-products-glow bm-products-glow-1"></div>
+    <div class="bm-products-glow bm-products-glow-2"></div>
+
+    <div class="bm-container">
+
+        <div class="bm-products-hero">
+
+            <span class="bm-products-badge">
+                <i class="fa-solid fa-cubes"></i>
+                همه محصولات
+            </span>
+
+            <h1>
+                محصولات را بر اساس
+                <span>دسته‌بندی</span>
+                ببین
+            </h1>
+
+            <p>
+                برای هر دسته، فقط ۱۵ محصول منتخب نمایش داده می‌شود و ادامه آن با یک کلیک به صفحه همان دسته می‌رود.
+                تمیز، سریع و قابل استفاده.
+            </p>
+
+        </div>
+
+        {% for category in categories %}
+            {% if category.featured_products %}
+
+                <section class="bm-category-block">
+
+                    <div class="bm-category-head">
+
+                        <div>
+                            <h2>{{ category.name }}</h2>
+                            <p>{{ category.description|truncatechars:140 }}</p>
+                        </div>
+
+                        <a href="/product/categories/{{category.slug}}/" class="bm-view-all-link">
+                            مشاهده همه
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
+
+                    </div>
+
+                    <div class="bm-slider-shell">
+
+                        <button class="bm-slider-btn prev" type="button" aria-label="قبلی">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                        <div class="bm-products-track">
+
+                            {% for product in category.featured_products %}
+
+                                <article class="bm-product-card">
+
+                                    <div class="bm-product-media">
+
+                                        {% with media=product.media.all|first %}
+                                            {% if media and media.image %}
+                                                <img src="{{ media.image.url }}" alt="{{ product.title }}">
+                                            {% else %}
+                                                <div class="bm-no-image">
+                                                    <i class="fa-regular fa-image"></i>
+                                                </div>
+                                            {% endif %}
+                                        {% endwith %}
+
+                                        {% if product.discount > 0 %}
+                                            <span class="bm-discount-badge">
+                                                تخفیف {{ product.discount|intcomma }}
+                                            </span>
+                                        {% endif %}
+
+                                    </div>
+
+                                    <div class="bm-product-body">
+
+                                        <h3>{{ product.title }}</h3>
+
+                                        <p>{{ product.description|truncatechars:90 }}</p>
+
+                                        <div class="bm-stock-line">
+                                            {% if product.count_inventory > 0 %}
+                                                <span class="in-stock">
+                                                    <i class="fa-solid fa-box-open"></i>
+                                                    {{ product.count_inventory }} عدد موجود
+                                                </span>
+                                            {% else %}
+                                                <span class="out-stock">
+                                                    <i class="fa-solid fa-circle-xmark"></i>
+                                                    ناموجود
+                                                </span>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="bm-price-row">
+                                            {% if product.discount > 0 %}
+                                                <div class="bm-price-box">
+                                                    <del>{{ product.price|intcomma }}</del>
+                                                    <strong>{{ product.final_price|intcomma }} تومان</strong>
+                                                </div>
+                                            {% else %}
+                                                <strong class="bm-main-price">{{ product.price|intcomma }} تومان</strong>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="bm-card-actions">
+                                            <a href="#" class="bm-action-btn view">
+                                                <i class="fa-solid fa-eye"></i>
+                                                مشاهده
+                                            </a>
+
+                                            {% if product.count_inventory > 0 %}
+                                                <form method="post" action="/product/cart/add/{{ product.id }}/" class="bm-cart-form">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                                    <button type="submit" class="bm-action-btn cart">
+                                                    <i class="fa-solid fa-cart-plus"></i>
+                                                    افزودن
+                                                    </button>
+                                                </form>
+                                            {% else %}
+                                                <span class="bm-action-btn cart disabled">
+                                                    ناموجود
+                                                </span>
+                                            {% endif %}
+                                        </div>
+
+                                    </div>
+
+                                </article>
+
+                            {% endfor %}
+
+                        </div>
+
+                        <button class="bm-slider-btn next" type="button" aria-label="بعدی">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                    </div>
+
+                </section>
+
+            {% endif %}
+        {% endfor %}
+
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.querySelectorAll('.bm-slider-shell').forEach((shell) => {
+    const track = shell.querySelector('.bm-products-track');
+    const prevBtn = shell.querySelector('.bm-slider-btn.prev');
+    const nextBtn = shell.querySelector('.bm-slider-btn.next');
+
+    if (!track || !prevBtn || !nextBtn) return;
+
+    const scrollAmount = () => Math.max(320, Math.floor(track.clientWidth * 0.85));
+
+    prevBtn.addEventListener('click', () => {
+        track.scrollBy({
+            left: scrollAmount(),
+            behavior: 'smooth'
+        });
+    });
+
+    nextBtn.addEventListener('click', () => {
+        track.scrollBy({
+            left: -scrollAmount(),
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+{% endblock %}

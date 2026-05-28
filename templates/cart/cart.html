@@ -1,0 +1,156 @@
+{% extends 'base/base_heder_footer.html' %}
+{% load humanize %}
+
+{% block title %}
+سبد خرید
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/templates/cart/style.css?v=cart">
+{% endblock %}
+
+{% block content %}
+
+<section class="bm-cart-page">
+
+    <div class="bm-container">
+
+        <div class="bm-cart-head">
+            <span>
+                <i class="fa-solid fa-cart-shopping"></i>
+                سبد خرید
+            </span>
+
+            <h1>محصولات انتخاب‌شده</h1>
+            <p>تعداد هر محصول را مدیریت کنید و بعد از بررسی نهایی، خرید را ثبت کنید.</p>
+        </div>
+
+        {% if cart_items %}
+
+            <div class="bm-cart-layout">
+
+                <div class="bm-cart-list">
+
+                    {% for item in cart_items %}
+
+                        <article class="bm-cart-item">
+
+                            <div class="bm-cart-media">
+                                {% with media=item.product.media.all|first %}
+                                    {% if media and media.image %}
+                                        <img src="{{ media.image.url }}" alt="{{ item.product.title }}">
+                                    {% else %}
+                                        <div class="bm-cart-no-image">
+                                            <i class="fa-regular fa-image"></i>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+
+                            <div class="bm-cart-info">
+                                <h2>{{ item.product.title }}</h2>
+                                <p>{{ item.product.description|truncatechars:120 }}</p>
+
+                                <div class="bm-cart-meta">
+                                    {% if item.product.count_inventory > 0 %}
+                                        <span class="in-stock">
+                                            <i class="fa-solid fa-box-open"></i>
+                                            {{ item.product.count_inventory }} عدد موجود
+                                        </span>
+                                    {% else %}
+                                        <span class="out-stock">
+                                            <i class="fa-solid fa-circle-xmark"></i>
+                                            ناموجود
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="bm-cart-controls">
+
+                                <strong>{{ item.line_total|intcomma }} تومان</strong>
+                                <small>قیمت واحد: {{ item.unit_price|intcomma }} تومان</small>
+
+                                <div class="bm-qty-control">
+                                    <form method="post" action="/product/cart/update/{{ item.id }}/">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="action" value="decrease">
+                                        <button type="submit" aria-label="کم کردن تعداد">
+                                            <i class="fa-solid fa-minus"></i>
+                                        </button>
+                                    </form>
+
+                                    <span>{{ item.quantity }}</span>
+
+                                    <form method="post" action="/product/cart/update/{{ item.id }}/">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="action" value="increase">
+                                        <button type="submit" aria-label="زیاد کردن تعداد">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <form method="post" action="/product/cart/remove/{{ item.id }}/">
+                                    {% csrf_token %}
+                                    <button type="submit" class="bm-remove-btn">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                        حذف
+                                    </button>
+                                </form>
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+                <aside class="bm-cart-summary">
+                    <h2>خلاصه سفارش</h2>
+
+                    <div class="bm-summary-row">
+                        <span>تعداد کالاها</span>
+                        <strong>{{ cart_count|intcomma }}</strong>
+                    </div>
+
+                    <div class="bm-summary-row total">
+                        <span>جمع کل</span>
+                        <strong>{{ subtotal|intcomma }} تومان</strong>
+                    </div>
+
+                    <form method="post" action="/product/cart/checkout/">
+                        {% csrf_token %}
+                        <button type="submit" class="bm-checkout-btn">
+                            <i class="fa-solid fa-credit-card"></i>
+                            ثبت خرید
+                        </button>
+                    </form>
+
+                    <form method="post" action="/product/cart/clear/">
+                        {% csrf_token %}
+                        <button type="submit" class="bm-clear-btn">
+                            خالی کردن سبد
+                        </button>
+                    </form>
+                </aside>
+
+            </div>
+
+        {% else %}
+
+            <div class="bm-cart-empty">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <h2>سبد خرید شما خالی است</h2>
+                <p>از صفحه محصولات، کالاهای موردنظر را به سبد خرید اضافه کنید.</p>
+                <a href="/product/products/">مشاهده محصولات</a>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}
