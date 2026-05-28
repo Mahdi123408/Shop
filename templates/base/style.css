@@ -392,6 +392,56 @@ a{
     .bm-footer-grid{
         grid-template-columns:1fr;
     }
+    .bm-header-inner{
+        gap:8px;
+    }
+
+    .bm-logo-text span{
+        display:none;
+    }
+
+    .bm-logo-text strong{
+        font-size:14px;
+    }
+
+    .bm-logo-badge{
+        width:40px;
+        height:40px;
+        border-radius:14px;
+        flex-shrink:0;
+    }
+
+    .bm-header-actions{
+        gap:6px;
+    }
+
+    .bm-icon-btn,
+    .bm-menu-btn,
+    .bm-user-btn{
+        height:40px;
+        border-radius:12px;
+    }
+
+    .bm-icon-btn,
+    .bm-menu-btn{
+        width:40px;
+    }
+
+    .bm-user-btn{
+        max-width:95px;
+        padding:0 6px;
+        gap:5px;
+        flex-shrink:1;
+    }
+
+    .bm-user-btn span{
+        max-width:42px;
+        font-size:12px;
+    }
+
+    .bm-user-arrow{
+        font-size:10px;
+    }
 }
 .bm-user-dropdown{
     position:relative;
